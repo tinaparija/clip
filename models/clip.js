@@ -2,7 +2,7 @@ var mongoose = require('mongoose'),
   Schema = mongoose.Schema;
 
 var ClipSchema = new Schema({
-  title: String,
+  concept: String,
   content: String,
 });
 
