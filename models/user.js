@@ -3,8 +3,9 @@ var mongoose = require('mongoose'),
     Clip = require('./clip');
 
 var UserSchema = new Schema({
-  name: String,
-  style: String,
+  email: String, 
+  name: String, 
+  password: String, 
   clips:[Clip.schema]
 });
 

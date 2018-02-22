@@ -4,6 +4,7 @@ var mongoose = require('mongoose'),
 var ClipSchema = new Schema({
   concept: String,
   content: String,
+  date: {type: Date, default: Date.now}
 });
 
 var Clip = mongoose.model('Clip', ClipSchema);

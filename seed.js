@@ -3,22 +3,34 @@ var db = require('./models');
 var usersList = [
 {
   name: 'Tina',
-  style: 'Personal'
+  email: 'tinaparija@gmail.com',
+  password: 'abc123'
 }, 
 {
   name: 'Shelby',
-  style: 'Journalism'
+  email: 'shelby@whatever.com',
+  password: 'abc123'
 }, 
 ];
 
-
 var clipsList = [{
   concept: 'life change',
-  content: 'This is the content.'
+  content: 'A paragraph (from the Ancient Greek παράγραφος paragraphos, "to write beside" or "written beside") is a self-contained unit of a discourse in writing dealing with a particular point or idea. Though not required by the syntax of any language, paragraphs are usually an expected part of formal writing, used to organize longer prose.',
+  date: new Date('January 21, 2018')
 },{
   concept: 'new topic',
-  content: 'seed this fucking data.'
+  content: 'A paragraph (from the Ancient Greek παράγραφος paragraphos, "to write beside" or "written beside") is a self-contained unit of a discourse in writing dealing with a particular point or idea. Though not required by the syntax of any language, paragraphs are usually an expected part of formal writing, used to organize longer prose.',
+  date: new Date('February 22, 2018')
+},{
+  concept: 'new topic',
+  content: 'A paragraph (from the Acient Greek παράγραφος paragraphos, "to write beside" or "written beside") is a self-contained unit of a discourse in writing dealing with a particular point or idea. Though not required by the syntax of any language, paragraphs are usually an expected part of formal writing, used to organize longer prose.',
+  date: new Date('February 23, 2018 ')
+},{
+  concept: 'new topic',
+  content: 'A paragraph (from the Ancient Greek παράγραφος paragraphos, "to write beside" or "written beside") is a self-contained unit of a discourse in writing dealing with a particular point or idea. Though not required by the syntax of any language, paragraphs are usually an expected part of formal writing, used to organize longer prose.',
+  date: new Date('March 24, 2018')
 },
+
 ]
 
 usersList.forEach(function(user) {

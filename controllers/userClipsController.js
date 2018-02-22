@@ -4,7 +4,6 @@ var Clip = models.Clip;
 
 
 function index(req, res) {
-
   User.findById(req.params.user_id, function(err, user){
       if (err) {
         res.status(500).send(err);
@@ -15,18 +14,18 @@ function index(req, res) {
 }
 
 function create(req, res) {
-	clip = Clip.create(req.body, function(err, user) {
+	Clip.create(req.body, function(err, clip) {
 		if (err) { console.log('error', err); }
-    res.json(user);
-  	});
+    
+    let user_id = req.params.user_id;
+    User.findById(user_id, function (err, foundUser) {
+      if (err) {console.log('error', err)};
+      foundUser.clips.push(clip);
+      foundUser.save();
+      res.json(foundUser);
+    })
+  });
 
-  let user_id = req.params.user_id;
-  	User.findById(user_id, function (err, foundUser) {
-    if (err) {console.log('error', err)};
-    foundUser.clips.push(clips);
-    foundUser.save();
-    res.json(foundUser);
-  })
 }
 
 function show(req, res) {
@@ -50,7 +49,6 @@ function destroy(req, res) {
 
   User.findOne({_id:user_id}, function (err, foundUser){
     if(err){console.log(error, err);}
-
     var foundClip = foundUser.clips.id(clip_id);
     foundClip.remove();
 
