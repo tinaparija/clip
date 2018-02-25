@@ -4,10 +4,18 @@
 var express = require('express');
 var app = express();
 var router = require('./config/routes.js');
+var db = require("./models"),
+    Post = db.Post,
+    User = db.User;
 
 // parse incoming urlencoded form data
 // and populate the req.body object
 var bodyParser = require('body-parser');
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local').Strategy;
+
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -23,6 +31,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(router);
+
+// middleware for auth
+app.use(cookieParser());
+app.use(session({
+  secret: 'dismysecret', 
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport config
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 /**********
  * SERVER *

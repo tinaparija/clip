@@ -11,6 +11,14 @@ function index(req, res) {
 }
 
 function create(req, res) {
+  // User.register(new User({email: req.body.email, name: req.body.name}), req.body.password,
+  //   function (err, newUser) {
+  //     console.log(newUser);
+  //     passport.authenticate('local')(req, res, function() {
+  //       res.json(newUser);
+  //     });
+  //   }
+  // );
   User.create(req.body, function(err, user) {
     if (err) { console.log('error', err); }
     res.json(user);

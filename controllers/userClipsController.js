@@ -25,7 +25,6 @@ function create(req, res) {
       res.json(foundUser);
     })
   });
-
 }
 
 function show(req, res) {
@@ -60,10 +59,90 @@ function destroy(req, res) {
 }
 
 
+function top_word(savedUser){
+  let wordCounts = {};
+  let content_holder = [];
+  for (let i = 0; i < clips.length; i++){
+    content_holder.push(clips[i].content)
+  }  
+
+  let combined = content_holder.join();
+  let text_cleaned = combined.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()"']/g,"");
+  let text_lowercased = text_cleaned.toLowerCase();
+  let individualized_words = text_lowercased.split(/\b/)
+
+  for(var i = 0; i < individualized_words.length; i++) {
+      wordCounts["_" + individualized_words[i]] = (wordCounts["_" + individualized_words[i]] || 0) + 1;
+  }
+
+  let badwords = {
+    _the: true, 
+    _be: true,
+    _to: true,
+    _of: true, 
+    _and: true,
+    _a: true,
+    _in: true,
+    _that: true,
+    _have: true,
+    _i: true,
+    _it: true, 
+    _for: true,
+    _not: true,
+    _on: true, 
+    _with: true, 
+    _he: true, 
+    _as: true, 
+    _you: true, 
+    _do: true, 
+    _at: true, 
+    _this: true, 
+    _but: true, 
+    _his: true, 
+    _by: true, 
+    _from: true, 
+    _they: true, 
+    _we: true, 
+    _say: true, 
+    _her: true, 
+    _she: true, 
+    _or: true, 
+    _an: true, 
+    _will: true, 
+    _my: true, 
+    _one: true, 
+    _all: true, 
+    _would: true, 
+    _there: true, 
+    _their: true, 
+    _what: true, 
+    _so: true, 
+    _up: true, 
+    _out: true,
+    _if: true, 
+  }
+
+  let topword1_name = '';
+  let topword1_value = 0;
+
+  for (let property in wordCounts) {
+    if (!badwords[property] && property != "_ "){
+      if (wordCounts[property] > topword1_value) {
+        topword1_name = property; 
+        topword1_value = wordCounts[property];
+      }
+    }
+  }
+
+  topword1_name_final = topword1_name.substr(1);
+
+}
+
 module.exports = {
   index: index,
   create: create,
   show: show,
   update: update,
-  destroy: destroy 
+  destroy: destroy,
+  top_word: top_word
 };

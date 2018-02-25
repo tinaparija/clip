@@ -13,11 +13,13 @@ function index_users(req, res) {
 
 // POST one user
 function create_user(req, res) {
-   User.create(req.body, function(err, user) {
-    if (err) { console.log('error', err); }
-    res.json(user);
-  });
-
+    User.register(new User({ username: req.body.username }), req.body.password,
+    function (err, newUser) {
+      passport.authenticate('local')(req, res, function() {
+        res.send('signed up!!!');
+      });
+    }
+  );
 }
 
 // GET one user
