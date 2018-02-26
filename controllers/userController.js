@@ -1,7 +1,7 @@
 var models = require('../models');
 var User = models.User; 
 var Clip = models.Clip; 
-
+var passport = require('passport');
 
 function index(req, res) {
   User.find({}, function(err, users) {
@@ -11,18 +11,24 @@ function index(req, res) {
 }
 
 function create(req, res) {
-  // User.register(new User({email: req.body.email, name: req.body.name}), req.body.password,
-  //   function (err, newUser) {
-  //     console.log(newUser);
-  //     passport.authenticate('local')(req, res, function() {
-  //       res.json(newUser);
-  //     });
-  //   }
-  // );
-  User.create(req.body, function(err, user) {
-    if (err) { console.log('error', err); }
-    res.json(user);
-  });
+  User.register(new User({email: req.body.email, name: req.body.name}), req.body.password,
+    function (err, newUser) {
+        passport.authenticate('local')(req, res, function() {
+        res.json(newUser);
+      });
+    }
+  );
+}
+
+function login(req, res){
+  res.json(req.user);
+}
+
+function logout(req, res) {
+  console.log("BEFORE logout", JSON.stringify(req.user));
+  req.logout();
+  console.log("AFTER logout", JSON.stringify(req.user));
+  res.send({logged_out: true})
 }
 
 function show(req, res) {
@@ -53,6 +59,8 @@ module.exports = {
   create: create,
   show: show,
   update: update,
-  destroy: destroy
+  destroy: destroy,
+  login: login, 
+  logout: logout
 };
 

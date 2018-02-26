@@ -9,7 +9,7 @@ function index(req, res) {
         res.status(500).send(err);
         return;
       }
-      res.json(user.clips);
+      res.json({clips:user.clips, top_word: top_word(user)});
     });
 }
 
@@ -62,6 +62,7 @@ function destroy(req, res) {
 function top_word(savedUser){
   let wordCounts = {};
   let content_holder = [];
+  let clips = savedUser.clips;
   for (let i = 0; i < clips.length; i++){
     content_holder.push(clips[i].content)
   }  
@@ -135,7 +136,7 @@ function top_word(savedUser){
   }
 
   topword1_name_final = topword1_name.substr(1);
-
+  return (topword1_name_final)
 }
 
 module.exports = {

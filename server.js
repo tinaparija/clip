@@ -5,7 +5,6 @@ var express = require('express');
 var app = express();
 var router = require('./config/routes.js');
 var db = require("./models"),
-    Post = db.Post,
     User = db.User;
 
 // parse incoming urlencoded form data
@@ -26,12 +25,6 @@ app.use(function(req, res, next) {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Serve static files from the `/public` directory:
-// i.e. `/images`, `/scripts`, `/styles`
-app.use(express.static('public'));
-app.use(bodyParser.json());
-app.use(router);
-
 // middleware for auth
 app.use(cookieParser());
 app.use(session({
@@ -39,13 +32,21 @@ app.use(session({
   resave: false,
   saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
 // passport config
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(User.createStrategy());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
+
+// Serve static files from the `/public` directory:
+// i.e. `/images`, `/scripts`, `/styles`
+app.use(express.static('public'));
+app.use(bodyParser.json());
+app.use(router);
+
 
 /**********
  * SERVER *

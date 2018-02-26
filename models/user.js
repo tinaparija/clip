@@ -11,7 +11,10 @@ var UserSchema = new Schema({
   top_word: ''
 });
 
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose, {
+	usernameField: "email",
+	hashField: "password"
+});
 
 var User = mongoose.model('User', UserSchema);
 module.exports = User;
