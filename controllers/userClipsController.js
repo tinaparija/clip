@@ -14,6 +14,9 @@ function index(req, res) {
 }
 
 function create(req, res) {
+  console.log(req.session)
+  console.log(req.session.passport)
+
 	Clip.create(req.body, function(err, clip) {
 		if (err) { console.log('error', err); }
     

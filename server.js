@@ -6,6 +6,7 @@ var app = express();
 var router = require('./config/routes.js');
 var db = require("./models"),
     User = db.User;
+require('dotenv').config()
 
 // parse incoming urlencoded form data
 // and populate the req.body object
@@ -17,9 +18,10 @@ var bodyParser = require('body-parser');
 
 
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", process.env.REACT_APP_FRONTEND_URL);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE");
+  res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
 
