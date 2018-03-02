@@ -11,10 +11,10 @@ function index(req, res) {
 }
 
 function create(req, res) {
-  console.log("creating")
   User.register(new User({email: req.body.email, name: req.body.name}), req.body.password,
     function (err, newUser) {
       console.log("registered")
+        if (err) res.send(err);
         passport.authenticate('local')(req, res, function() {
         res.json(newUser);
       });

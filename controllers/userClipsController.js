@@ -14,12 +14,8 @@ function index(req, res) {
 }
 
 function create(req, res) {
-  console.log(req.session)
-  console.log(req.session.passport)
-
-	Clip.create(req.body, function(err, clip) {
-		if (err) { console.log('error', err); }
-    
+  Clip.create(req.body, function(err, clip) {
+    if (err) { console.log('error', err); }
     let user_id = req.params.user_id;
     User.findById(user_id, function (err, foundUser) {
       if (err) {console.log('error', err)};
@@ -33,16 +29,39 @@ function create(req, res) {
 function show(req, res) {
   var user_id = req.params.user_id;
   var clip_id = req.params.clip_id;
-
   User.findOne({_id: user_id}, function (err, foundUser){
-    if(err){console.log(error, err);}
     var foundClip = foundUser.clips.id(clip_id);
     res.json(foundClip);
   })
 }
 
 function update(req, res) {
-  console.log("hello!");
+  var user_id = req.params.user_id;
+  var clip_id = req.params.clip_id;
+  console.log(clip_id);
+
+  // Clip.findById(clip_id, function (err, foundClip){
+  //   if(err){console.log(error, err);}
+  //   console.log(err)
+  //   console.log(foundClip)
+  //   foundClip.concept = req.body.concept;
+  //   foundClip.content = req.body.content; 
+  //   foundClip.save(function(err, saved){
+  //     if(err) {console.log('error', err)}
+  //     res.json(saved);
+  //   })
+  // })
+
+  User.findOne({_id:user_id}, function (err, foundUser){
+    var foundClip = foundUser.clips.id(clip_id)
+    console.log(foundClip);
+    foundClip.concept = req.body.concept;
+    foundClip.content = req.body.content; 
+    foundUser.save(function(err, saved){
+      if(err) {console.log('error', err)}
+      res.json(saved);
+    })
+  })
 }
 
 function destroy(req, res) {
@@ -54,7 +73,7 @@ function destroy(req, res) {
     var foundClip = foundUser.clips.id(clip_id);
     foundClip.remove();
 
-    foundUser.save(function(err, saved){
+    foundUser.save(function(err, saved) {
       if(err) {console.log('error', err);}
       res.json(saved);
     });
