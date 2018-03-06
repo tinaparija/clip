@@ -3,7 +3,7 @@ var db = require('./models');
 var usersList = [
 {
   name: 'Tina',
-  email: 'tinaparija@gmail.com',
+  email: 't@gmail.com',
   password: 'abc123'
 }, 
 {
