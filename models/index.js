@@ -1,6 +1,5 @@
 var mongoose = require("mongoose");
 
-// mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/love.ly", {useMongoClient: true});
 mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/clip_fe", {useMongoClient: true});
 
 mongoose.Promise = global.Promise;  // use native Promise

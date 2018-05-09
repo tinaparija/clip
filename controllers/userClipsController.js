@@ -105,6 +105,7 @@ function top_word(savedUser){
     _of: true, 
     _and: true,
     _a: true,
+    _is: true, 
     _in: true,
     _that: true,
     _have: true,
